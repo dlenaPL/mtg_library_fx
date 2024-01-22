@@ -16,6 +16,7 @@ public class Main extends  Application{
         stage.setTitle("MTG LIBRARY");
         stage.setScene(scene);
         stage.show();
+        //hello
     }
 
 
