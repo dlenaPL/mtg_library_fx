@@ -2,6 +2,9 @@ package com.dl.demo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +14,7 @@ import java.util.Objects;
 public enum CardLibraryEnum implements CardCollectionControl {
     INSTANCE;
     private ArrayList<Card> library;
+
     CardLibraryEnum(){
         this.library = new ArrayList<>();
     }
@@ -65,6 +69,5 @@ public enum CardLibraryEnum implements CardCollectionControl {
             e.printStackTrace();
         }
     }
-
 
 }

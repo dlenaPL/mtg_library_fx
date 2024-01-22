@@ -58,6 +58,11 @@ public class Main extends  Application{
         System.out.println("========================================== " + library.size());
 
         launch();
+
+        if (plains.getClass() == Land.class) {
+            System.out.println("plains is a Land");
+        }
+
     }
 
 }
