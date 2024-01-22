@@ -1,0 +1,25 @@
+[ {
+  "@type" : "Spell",
+  "cardName" : "Abuelo's Awakening",
+  "cardType" : "Sorcery",
+  "expansionSet" : "The Lost Caverns of Ixalan",
+  "rarity" : "RARE",
+  "manaCost" : "X 3 White",
+  "cardText" : "Return target artifact or non-Aura enchantment card from your graveyard to the battlefield with X additional +1/+1 counters on it.\nIt's a 1/1 Spirit creature with flying in addition to its other types."
+}, {
+  "@type" : "Creature",
+  "cardName" : "Abyssal Gorestalker",
+  "cardType" : "Creature — Horror",
+  "expansionSet" : "The Lost Caverns of Ixalan",
+  "rarity" : "UNCOMMON",
+  "manaCost" : "4 Black Black",
+  "cardText" : "When Abyssal Gorestalker enters the battlefield, each player sacrifices two creatures.",
+  "power" : 6,
+  "toughness" : 6
+}, {
+  "@type" : "Land",
+  "cardName" : "Plains",
+  "cardType" : "Land",
+  "expansionSet" : "The Lost Caverns of Ixalan",
+  "rarity" : "COMMON"
+} ]
