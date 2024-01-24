@@ -16,7 +16,6 @@ public class Main extends  Application{
         stage.setTitle("MTG LIBRARY");
         stage.setScene(scene);
         stage.show();
-        //hello
     }
 
 
@@ -58,10 +57,6 @@ public class Main extends  Application{
         System.out.println("========================================== " + library.size());
 
         launch();
-
-        if (plains.getClass() == Land.class) {
-            System.out.println("plains is a Land");
-        }
 
     }
 

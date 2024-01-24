@@ -24,7 +24,6 @@
             <TableColumn fx:id="colCardType" minWidth="0.0" prefWidth="116.0" text="Type" />
             <TableColumn fx:id="colCardManaCost" prefWidth="175.0" text="Mana Cost" />
             <TableColumn fx:id="colCardRarity" prefWidth="77.0" text="Rarity" />
-            <TableColumn prefWidth="281.0" text="Actions" />
         </columns>
       </TableView>
       <Pane layoutY="550.0" prefHeight="50.0" prefWidth="800.0" style="-fx-background-color: #2d3e54;" />
