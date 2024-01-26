@@ -2,6 +2,9 @@ package com.dl.demo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,12 +14,17 @@ import java.util.Objects;
 public enum CardLibraryEnum implements CardCollectionControl {
     INSTANCE;
     private ArrayList<Card> library;
+    private ObservableList<Card> tvObservableList;
     CardLibraryEnum(){
         this.library = new ArrayList<>();
+        tvObservableList = FXCollections.observableList(this.library);
     }
 
     public ArrayList<Card> getLibrary() {
         return library;
+    }
+    public ObservableList<Card> getTvObservableList() {
+        return tvObservableList;
     }
 
     // INTERFACE METHODS
@@ -61,6 +69,7 @@ public enum CardLibraryEnum implements CardCollectionControl {
         try {
             this.library = mapper.readValue(new File("src/main/java/Json/card_library.json"), mapper.getTypeFactory().constructCollectionType(ArrayList.class, Card.class));
             System.out.println("Loaded from JSON");
+            this.tvObservableList.setAll(this.library);
         } catch (IOException e) {
             e.printStackTrace();
         }

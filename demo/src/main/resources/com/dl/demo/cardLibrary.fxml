@@ -1,16 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.dl.demo.CardLibraryController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dl.demo.CardLibraryController">
+   <children>
+      <TableView fx:id="tvCardList" layoutX="200.0" layoutY="100.0" prefHeight="450.0" prefWidth="800.0">
+        <columns>
+            <TableColumn fx:id="colCardName" prefWidth="207.0" text="Name" />
+            <TableColumn fx:id="colCardType" minWidth="0.0" prefWidth="122.0" text="Type" />
+            <TableColumn fx:id="colCardManaCost" prefWidth="112.0" text="Mana Cost" />
+            <TableColumn fx:id="colCardRarity" prefWidth="142.0" text="Rarity" />
+        </columns>
+      </TableView>
+      <Pane prefHeight="100.0" prefWidth="1000.0" style="-fx-background-color: #2d3e54;" AnchorPane.leftAnchor="0.0">
+         <children>
+            <Text fill="WHITE" layoutX="413.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MTG Card Library" textAlignment="CENTER">
+               <font>
+                  <Font name="Calibri Bold" size="28.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Pane layoutY="550.0" prefHeight="50.0" prefWidth="1000.0" style="-fx-background-color: #2d3e54;" />
+      <VBox alignment="TOP_CENTER" layoutY="100.0" prefHeight="450.0" prefWidth="200.0" spacing="30.0" style="-fx-background-color: #2d3e54;">
+         <children>
+            <Button fx:id="btnAddCard" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Add" />
+            <Button fx:id="btnDeleteCard" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Delete" />
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets top="30.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>
