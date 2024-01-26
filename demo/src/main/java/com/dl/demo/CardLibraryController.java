@@ -85,7 +85,11 @@ public class CardLibraryController {
             @Override
             public void handle(ActionEvent actionEvent) {
                 System.out.println("delete button clicked");
+                Card card = tvCardList.getSelectionModel().getSelectedItem();
+                cardLibraryEnum.remove(card.getCardName());
+
                 tvCardList.getItems().removeAll(tvCardList.getSelectionModel().getSelectedItem());
+                System.out.println(cardLibraryEnum.size());
             }
         });
 
