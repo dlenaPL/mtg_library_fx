@@ -18,6 +18,7 @@ import java.io.IOException;
 
 public class CardLibraryController {
 
+
     @FXML
     private TableView<Card> tvCardList = new TableView<>();
     @FXML
@@ -34,11 +35,12 @@ public class CardLibraryController {
     private Button btnDeleteCard = new Button("Delete");
 
 
+    private final CardLibraryEnum cardLibraryEnum = CardLibraryEnum.INSTANCE;
 
-    private CardLibraryEnum cardLibraryEnum = CardLibraryEnum.INSTANCE;
-    private ObservableList<Card> tvObservableList = FXCollections.observableList(cardLibraryEnum.getLibrary());
+
 
     public void populateLibrary(){
+        System.out.println("fired populate");
         colCardName.setCellValueFactory(new PropertyValueFactory<Card, String>("cardName"));
         colCardType.setCellValueFactory(new PropertyValueFactory<Card, String>("cardType"));
         colCardManaCost.setCellValueFactory(cellData->{
@@ -50,13 +52,14 @@ public class CardLibraryController {
                 return new SimpleStringProperty();
         });
         colCardRarity.setCellValueFactory(new PropertyValueFactory<Card, Rarity>("rarity"));
-        tvCardList.setItems(tvObservableList);
+        tvCardList.setItems(cardLibraryEnum.getTvObservableList());
     }
 
     @FXML
     public void initialize(){
 
         populateLibrary();
+
 
         btnAddCard.setOnAction(new EventHandler<>() {
             @Override
@@ -73,6 +76,8 @@ public class CardLibraryController {
                     System.out.println("file not found");
                     throw new RuntimeException(e);
                 }
+
+
             }
         });
 
@@ -83,6 +88,7 @@ public class CardLibraryController {
                 tvCardList.getItems().removeAll(tvCardList.getSelectionModel().getSelectedItem());
             }
         });
+
 
 
 

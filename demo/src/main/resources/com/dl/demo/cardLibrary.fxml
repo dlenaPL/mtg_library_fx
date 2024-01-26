@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -18,21 +20,27 @@
             <TableColumn fx:id="colCardRarity" prefWidth="142.0" text="Rarity" />
         </columns>
       </TableView>
-      <Pane layoutX="200.0" prefHeight="100.0" prefWidth="800.0" style="-fx-background-color: #2d3e54;">
+      <Pane prefHeight="100.0" prefWidth="1000.0" style="-fx-background-color: #2d3e54;" AnchorPane.leftAnchor="0.0">
          <children>
-            <Text fill="WHITE" layoutX="313.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MTG Card Library" textAlignment="CENTER">
+            <Text fill="WHITE" layoutX="413.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MTG Card Library" textAlignment="CENTER">
                <font>
-                  <Font name="Calibri Bold" size="24.0" />
+                  <Font name="Calibri Bold" size="28.0" />
                </font>
             </Text>
          </children>
       </Pane>
-      <Pane layoutX="200.0" layoutY="550.0" prefHeight="50.0" prefWidth="800.0" style="-fx-background-color: #2d3e54;" />
-      <Pane prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: #2d3e54;">
+      <Pane layoutY="550.0" prefHeight="50.0" prefWidth="1000.0" style="-fx-background-color: #2d3e54;" />
+      <VBox alignment="TOP_CENTER" layoutY="100.0" prefHeight="450.0" prefWidth="200.0" spacing="30.0" style="-fx-background-color: #2d3e54;">
          <children>
-            <Button fx:id="btnAddCard" layoutX="50.0" layoutY="177.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Add" />
-            <Button fx:id="btnDeleteCard" layoutX="50.0" layoutY="231.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Delete" />
+            <Button fx:id="btnAddCard" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Add" />
+            <Button fx:id="btnDeleteCard" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Delete" />
          </children>
-      </Pane>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets top="30.0" />
+         </padding>
+      </VBox>
    </children>
 </AnchorPane>

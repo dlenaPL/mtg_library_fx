@@ -54,6 +54,8 @@ public class Main extends  Application{
         library.clear();
         library.show();
         library.loadFromJason();
+        System.out.println("size :D : " + library.getTvObservableList().size());
+        System.out.println("size of list: " + library.getLibrary().size());
         library.showFullView();
         System.out.println("========================================== " + library.size());
 
