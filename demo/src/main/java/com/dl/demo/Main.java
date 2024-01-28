@@ -1,6 +1,7 @@
 package com.dl.demo;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,10 +16,9 @@ public class Main extends  Application{
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("MTG LIBRARY");
         stage.setScene(scene);
+        stage.setOnHidden(e -> Platform.exit());
         stage.show();
-        //hello
     }
-
 
     public static void main(String[] args) {
 
