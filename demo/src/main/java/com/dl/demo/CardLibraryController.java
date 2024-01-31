@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -49,7 +50,6 @@ public class CardLibraryController {
     private final CardLibraryEnum cardLibraryEnum = CardLibraryEnum.INSTANCE;
 
 
-
     public void populateLibrary(){
         System.out.println("fired populate");
         colCardName.setCellValueFactory(new PropertyValueFactory<Card, String>("cardName"));
@@ -70,6 +70,38 @@ public class CardLibraryController {
     public void initialize(){
 
         populateLibrary();
+        //scene.getStylesheets().add(Client.class.getResource("main.css").toExternalForm());
+        tvCardList.getStylesheets().add(String.valueOf(getClass().getResource("tableview.css")));
+
+///getClass().getResource("addCardScene.fxml")
+               // ableView.getStylesheets().add("javafx_testtableview/style_tableview");
+
+        tvCardList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getClickCount() == 2 && tvCardList.getSelectionModel().getSelectedItem() != null){
+                    try {
+                        FXMLLoader loader = new FXMLLoader();
+                        loader.setLocation(getClass().getResource("showCard.fxml"));
+                        Parent parent = loader.load();
+
+                        ShowCardController ctrl = loader.getController();
+
+                        ctrl.initData(tvCardList.getSelectionModel().getSelectedItem());
+                        System.out.println(tvCardList.getSelectionModel().getSelectedItem());
+
+                        Scene scene = new Scene(parent);
+                        Stage stage = new Stage();
+                        stage.setScene(scene);
+                        stage.initModality(Modality.APPLICATION_MODAL);
+                        stage.show();
+                    } catch (IOException e) {
+                        System.out.println("file not found");
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
 
         btnAddCard.setOnAction(new EventHandler<>() {
             @Override
@@ -145,7 +177,9 @@ public class CardLibraryController {
                 File selectedFile = fileChooser.showOpenDialog(stage);
                 if(selectedFile != null){
                     System.out.println("Opened file");
-                    System.out.println(selectedFile.getPath());
+                    String path = selectedFile.getPath();
+                    System.out.println(path);
+                    cardLibraryEnum.loadFromJason(path);
                 }
             }
         });
@@ -167,7 +201,9 @@ public class CardLibraryController {
                 File selectedFile = fileChooser.showSaveDialog(stage);
                 if(selectedFile != null){
                     System.out.println("Save file");
-                    System.out.println(selectedFile.getPath());
+                    String path = selectedFile.getPath();
+                    System.out.println(path);
+                    cardLibraryEnum.saveToJson(path);
                 }
             }
         });
