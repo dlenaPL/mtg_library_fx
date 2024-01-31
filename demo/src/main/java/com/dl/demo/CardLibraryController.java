@@ -8,13 +8,17 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
+import java.io.File;
 import java.io.IOException;
 
 public class CardLibraryController {
@@ -34,6 +38,12 @@ public class CardLibraryController {
     private Button btnAddCard = new Button("Add");
     @FXML
     private Button btnDeleteCard = new Button("Delete");
+    @FXML
+    private Button btnShowCard = new Button("Show");
+    @FXML
+    private Button btnImport = new Button("Import");
+    @FXML
+    private Button btnExport = new Button("Export");
 
 
     private final CardLibraryEnum cardLibraryEnum = CardLibraryEnum.INSTANCE;
@@ -61,7 +71,6 @@ public class CardLibraryController {
 
         populateLibrary();
 
-
         btnAddCard.setOnAction(new EventHandler<>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -73,13 +82,10 @@ public class CardLibraryController {
                     stage.setScene(scene);
                     stage.initModality(Modality.APPLICATION_MODAL);
                     stage.show();
-
                 } catch (IOException e) {
                     System.out.println("file not found");
                     throw new RuntimeException(e);
                 }
-
-
             }
         });
 
@@ -89,153 +95,86 @@ public class CardLibraryController {
                 System.out.println("delete button clicked");
                 Card card = tvCardList.getSelectionModel().getSelectedItem();
                 cardLibraryEnum.remove(card.getCardName());
-
                 tvCardList.getItems().removeAll(tvCardList.getSelectionModel().getSelectedItem());
                 System.out.println(cardLibraryEnum.size());
+            }
+        });
+
+        btnShowCard.setOnAction(new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.out.println("Show button clicked");
+                try {
+                    //Parent parent = FXMLLoader.load(getClass().getResource("showCard.fxml"));
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getResource("showCard.fxml"));
+                    Parent parent = loader.load();
+
+                    ShowCardController ctrl = loader.getController();
+
+                    ctrl.initData(tvCardList.getSelectionModel().getSelectedItem());
+                    System.out.println(tvCardList.getSelectionModel().getSelectedItem());
+
+                    Scene scene = new Scene(parent);
+                    Stage stage = new Stage();
+                    stage.setScene(scene);
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.show();
+                } catch (IOException e) {
+                    System.out.println("file not found");
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        btnImport.setOnAction(new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Choose file: ");
+
+                FileChooser.ExtensionFilter ex1 = new FileChooser.ExtensionFilter("JSON Files", "*.json");
+                FileChooser.ExtensionFilter ex2 = new FileChooser.ExtensionFilter("All Files", "*.*");
+
+                fileChooser.getExtensionFilters().addAll(ex1, ex2);
+                fileChooser.setInitialDirectory(new File("C:/Users/48721/OneDrive/Pulpit"));
+
+                Node node = (Node)actionEvent.getSource();
+                Stage stage = (Stage)node.getScene().getWindow();
+
+                File selectedFile = fileChooser.showOpenDialog(stage);
+                if(selectedFile != null){
+                    System.out.println("Opened file");
+                    System.out.println(selectedFile.getPath());
+                }
+            }
+        });
+        btnExport.setOnAction(new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Save file: ");
+
+                FileChooser.ExtensionFilter ex1 = new FileChooser.ExtensionFilter("JSON Files", "*.json");
+                FileChooser.ExtensionFilter ex2 = new FileChooser.ExtensionFilter("All Files", "*.*");
+                fileChooser.getExtensionFilters().addAll(ex1, ex2);
+
+                fileChooser.setInitialDirectory(new File("C:/Users/48721/OneDrive/Pulpit"));
+
+                Node node = (Node)actionEvent.getSource();
+                Stage stage = (Stage)node.getScene().getWindow();
+
+                File selectedFile = fileChooser.showSaveDialog(stage);
+                if(selectedFile != null){
+                    System.out.println("Save file");
+                    System.out.println(selectedFile.getPath());
+                }
             }
         });
 
 
 
 
-
-
-
-
-//        colCardName.setCellValueFactory(new PropertyValueFactory<Card, String>("cardName"));
-//        colCardType.setCellValueFactory(new PropertyValueFactory<Card, String>("cardType"));
-//        colCardManaCost.setCellValueFactory(cellData->{
-//            Card card = cellData.getValue();
-//            //check the lower child in hierarchy first
-//            if(cellData.getValue() instanceof Spell)
-//                return new SimpleStringProperty(((Spell)card).getManaCost());
-//            else
-//                return new SimpleStringProperty();
-//        });
-//        colCardRarity.setCellValueFactory(new PropertyValueFactory<Card, Rarity>("rarity"));
-//        tvCardList.setItems(tvObservableList);
-//        //tvCardList.getColumns().addAll(colCardName, colCardType, colCardManaCost, colCardRarity);
-
-
-
-
-
-
-        //@TODO
-        //maybe there is more simple solution for this ? hm...
-//        addShowBtnToTable();
-//        addShowDeleteBtnToTable();
-//        addEditBtnToColumn();
     }
-
-
-//    private void addShowBtnToTable(){
-//        TableColumn<Card, Void> colShowBtn = new TableColumn<>("Show");
-//        Callback<TableColumn<Card, Void>, TableCell<Card, Void>> cellFactory = new Callback<TableColumn<Card, Void>, TableCell<Card, Void>>() {
-//            @Override
-//            public TableCell<Card, Void> call(final TableColumn<Card, Void> param) {
-//
-//                final TableCell<Card, Void> cell = new TableCell<>() {
-//                    private final Button btnShow = new Button();
-//                    {
-//                        ImageView view = new ImageView(new Image("C:\\Users\\48721\\OneDrive\\Pulpit\\java_projects\\demo\\src\\main\\resources\\images\\show_btn.png"));
-//                        view.setFitHeight(16);
-//                        view.setPreserveRatio(true);
-//                        btnShow.setGraphic(view);
-//                        //btnShow.setContentDisplay(ContentDisplay.TOP);
-//
-//                    }
-//
-//                    {
-//                        btnShow.setOnAction((ActionEvent event) -> {
-//                            Card card = getTableView().getItems().get(getIndex());
-//                            System.out.println("selected data: " + card.getCardName());
-//                        });
-//                    }
-//
-//
-//                    @Override
-//                    public void updateItem(Void item, boolean empty) {
-//                        super.updateItem(item, empty);
-//                        if (empty) {
-//                            setGraphic(null);
-//                        } else {
-//                            setGraphic(btnShow);
-//                        }
-//                    }
-//                };
-//                return cell;
-//            }
-//        };
-//        colShowBtn.setCellFactory(cellFactory);
-//        tvCardList.getColumns().add(colShowBtn);
-//    }
-//
-//    private void addEditBtnToColumn(){
-//        TableColumn<Card, Void> colEditBtn = new TableColumn<>("Edit");
-//        Callback<TableColumn<Card, Void>, TableCell<Card, Void>> cellFactory = new Callback<TableColumn<Card, Void>, TableCell<Card, Void>>() {
-//            @Override
-//            public TableCell<Card, Void> call(final TableColumn<Card, Void> param) {
-//
-//                final TableCell<Card, Void> cell = new TableCell<>() {
-//                    private final Button btnEdit = new Button("Edit");
-//
-//                    {
-//                        btnEdit.setOnAction((ActionEvent event) -> {
-//                            Card card = getTableView().getItems().get(getIndex());
-//                            System.out.println("Edit data: " + card.getCardName());
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void updateItem(Void item, boolean empty) {
-//                        super.updateItem(item, empty);
-//                        if (empty) {
-//                            setGraphic(null);
-//                        } else {
-//                            setGraphic(btnEdit);
-//                        }
-//                    }
-//                };
-//                return cell;
-//            }
-//        };
-//        colEditBtn.setCellFactory(cellFactory);
-//        tvCardList.getColumns().add(colEditBtn);
-//    }
-//
-//    private void addShowDeleteBtnToTable(){
-//        TableColumn<Card, Void> colDeleteBtn = new TableColumn<>("Delete");
-//        Callback<TableColumn<Card, Void>, TableCell<Card, Void>> cellFactory = new Callback<TableColumn<Card, Void>, TableCell<Card, Void>>() {
-//            @Override
-//            public TableCell<Card, Void> call(final TableColumn<Card, Void> param) {
-//
-//                final TableCell<Card, Void> cell = new TableCell<>() {
-//                    private final Button btnDelete = new Button("Delete");
-//
-//                    {
-//                        btnDelete.setOnAction((ActionEvent event) -> {
-//                            Card card = getTableView().getItems().get(getIndex());
-//                            System.out.println("Delete data: " + card.getCardName());
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void updateItem(Void item, boolean empty) {
-//                        super.updateItem(item, empty);
-//                        if (empty) {
-//                            setGraphic(null);
-//                        } else {
-//                            setGraphic(btnDelete);
-//                        }
-//                    }
-//                };
-//                return cell;
-//            }
-//        };
-//        colDeleteBtn.setCellFactory(cellFactory);
-//        tvCardList.getColumns().add(colDeleteBtn);
-    //}
-
 
 }

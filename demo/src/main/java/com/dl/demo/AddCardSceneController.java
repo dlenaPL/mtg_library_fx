@@ -161,7 +161,6 @@ public class AddCardSceneController {
                 addCardToLib(actionEvent);
                 clear(actionEvent);
 
-
                 Node node = (Node)actionEvent.getSource();
                 Stage stage = (Stage)node.getScene().getWindow();
                 stage.close();
