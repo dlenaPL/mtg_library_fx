@@ -40,10 +40,6 @@ public enum CardLibraryEnum implements CardCollectionControl {
     public void clear(){
         this.library.clear();
     }
-
-    //TODO
-    //public void editCard(Card card){}
-
     public void show(){
         this.library.forEach((card) -> System.out.println(card.getCardName()));
     }

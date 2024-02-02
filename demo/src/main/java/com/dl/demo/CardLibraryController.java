@@ -25,6 +25,10 @@ import java.io.IOException;
 public class CardLibraryController {
 
 
+    public TableView<Card> getTvCardList() {
+        return tvCardList;
+    }
+
     @FXML
     private TableView<Card> tvCardList = new TableView<>();
     @FXML
@@ -40,7 +44,7 @@ public class CardLibraryController {
     @FXML
     private Button btnDeleteCard = new Button("Delete");
     @FXML
-    private Button btnShowCard = new Button("Show");
+    private Button btnEditCard = new Button("Edit");
     @FXML
     private Button btnImport = new Button("Import");
     @FXML
@@ -70,11 +74,7 @@ public class CardLibraryController {
     public void initialize(){
 
         populateLibrary();
-        //scene.getStylesheets().add(Client.class.getResource("main.css").toExternalForm());
         tvCardList.getStylesheets().add(String.valueOf(getClass().getResource("tableview.css")));
-
-///getClass().getResource("addCardScene.fxml")
-               // ableView.getStylesheets().add("javafx_testtableview/style_tableview");
 
         tvCardList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -94,6 +94,7 @@ public class CardLibraryController {
                         Stage stage = new Stage();
                         stage.setScene(scene);
                         stage.initModality(Modality.APPLICATION_MODAL);
+                        stage.setResizable(false);
                         stage.show();
                     } catch (IOException e) {
                         System.out.println("file not found");
@@ -113,6 +114,7 @@ public class CardLibraryController {
                     Stage stage = new Stage();
                     stage.setScene(scene);
                     stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.setResizable(false);
                     stage.show();
                 } catch (IOException e) {
                     System.out.println("file not found");
@@ -132,32 +134,7 @@ public class CardLibraryController {
             }
         });
 
-        btnShowCard.setOnAction(new EventHandler<>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                System.out.println("Show button clicked");
-                try {
-                    //Parent parent = FXMLLoader.load(getClass().getResource("showCard.fxml"));
-                    FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(getClass().getResource("showCard.fxml"));
-                    Parent parent = loader.load();
 
-                    ShowCardController ctrl = loader.getController();
-
-                    ctrl.initData(tvCardList.getSelectionModel().getSelectedItem());
-                    System.out.println(tvCardList.getSelectionModel().getSelectedItem());
-
-                    Scene scene = new Scene(parent);
-                    Stage stage = new Stage();
-                    stage.setScene(scene);
-                    stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.show();
-                } catch (IOException e) {
-                    System.out.println("file not found");
-                    throw new RuntimeException(e);
-                }
-            }
-        });
 
         btnImport.setOnAction(new EventHandler<>() {
             @Override
@@ -208,7 +185,31 @@ public class CardLibraryController {
             }
         });
 
+        btnEditCard.setOnAction(new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getResource("editCard.fxml"));
+                    Parent parent = loader.load();
 
+                    EditCardController ctrl = loader.getController();
+
+                    ctrl.initData(tvCardList.getSelectionModel().getSelectedItem());
+
+                    Scene scene = new Scene(parent);
+                    Stage stage = new Stage();
+                    stage.setScene(scene);
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.setResizable(false);
+                    stage.show();
+                } catch (IOException e) {
+                    System.out.println("file not found");
+                    throw new RuntimeException(e);
+                }
+            }
+
+        });
 
 
     }

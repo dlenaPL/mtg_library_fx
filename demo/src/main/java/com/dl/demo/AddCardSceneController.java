@@ -151,7 +151,6 @@ public class AddCardSceneController {
         cbCardType.setOnAction(cardTypeEvent);
         hideFields();
 
-
         cbRarity.getItems().setAll(Rarity.values());
         cbRarity.setPromptText("Choose rarity");
         btnAdd.setOnAction(new EventHandler<>(){
@@ -160,7 +159,6 @@ public class AddCardSceneController {
                 System.out.println("inside add button");
                 addCardToLib(actionEvent);
                 clear(actionEvent);
-
                 Node node = (Node)actionEvent.getSource();
                 Stage stage = (Stage)node.getScene().getWindow();
                 stage.close();

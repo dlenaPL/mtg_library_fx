@@ -12,7 +12,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dl.demo.CardLibraryController">
    <children>
-      <TableView fx:id="tvCardList" layoutX="200.0" layoutY="100.0" prefHeight="450.0" prefWidth="800.0">
+      <TableView fx:id="tvCardList" layoutX="200.0" layoutY="100.0" prefHeight="450.0" prefWidth="780.0">
         <columns>
             <TableColumn fx:id="colCardName" prefWidth="207.0" text="Name" />
             <TableColumn fx:id="colCardType" minWidth="0.0" prefWidth="122.0" text="Type" />
@@ -34,7 +34,7 @@
          <children>
             <Button fx:id="btnAddCard" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Add" />
             <Button fx:id="btnDeleteCard" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Delete" />
-            <Button fx:id="btnShowCard" layoutX="60.0" layoutY="100.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Show" />
+            <Button fx:id="btnEditCard" layoutX="60.0" layoutY="100.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Edit" />
             <Button fx:id="btnImport" layoutX="60.0" layoutY="160.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Import" />
             <Button fx:id="btnExport" layoutX="60.0" layoutY="220.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Export" />
          </children>
@@ -45,5 +45,6 @@
             <Insets top="30.0" />
          </padding>
       </VBox>
+      <Pane layoutX="980.0" layoutY="100.0" prefHeight="450.0" prefWidth="20.0" style="-fx-background-color: #2d3e54;" />
    </children>
 </AnchorPane>
