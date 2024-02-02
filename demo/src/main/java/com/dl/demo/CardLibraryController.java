@@ -1,6 +1,8 @@
 package com.dl.demo;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -43,9 +45,13 @@ public class CardLibraryController {
     private Button btnImport = new Button("Import");
     @FXML
     private Button btnExport = new Button("Export");
-
+    @FXML
+    private TextField tfSearch;
+    @FXML
+    private ComboBox<SearchOptions> cbSearchOptions;
 
     private final CardLibraryEnum cardLibraryEnum = CardLibraryEnum.INSTANCE;
+    private FilteredList<Card> filteredList = new FilteredList<>(cardLibraryEnum.getTvObservableList(), b->true);
 
 
     public void populateLibrary(){
@@ -77,6 +83,40 @@ public class CardLibraryController {
 
         tvCardList.setItems(cardLibraryEnum.getTvObservableList());
         tvCardList.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+    }
+
+    private void filterThem(SearchOptions option){
+        if(option != null){
+            tfSearch.textProperty().addListener((observable, oldValue, newValue)->{
+                filteredList.setPredicate(card -> {
+                    if(newValue == null || newValue.isEmpty()){
+                        return true;
+                    }
+                    String stringFilter = newValue.toLowerCase();
+
+                    switch (option) {
+                        case NAME:
+                            return card.getCardName().toLowerCase().contains(stringFilter);
+                        case TYPE:
+                            return card.getCardType().toLowerCase().contains(stringFilter);
+                        case RARITY:
+                            return card.getRarity().getValue().toLowerCase().contains(stringFilter);
+                        case MANA_COST:
+                            if (card instanceof Spell)
+                                return ((Spell) card).getManaCost().toLowerCase().contains(stringFilter);
+                    };
+                    //if contains return true - matches, else return false - doesn't match
+//                  return card.getCardName().toLowerCase().contains(stringFilter);
+                    return false;
+                });
+            });
+
+            SortedList<Card> sortedList = new SortedList<>(filteredList);
+            sortedList.comparatorProperty().bind(tvCardList.comparatorProperty());
+
+            tvCardList.setItems(sortedList);
+        }
 
     }
 
@@ -229,6 +269,32 @@ public class CardLibraryController {
                 System.out.println(cardLibraryEnum.size());
             }
         });
+
+        cbSearchOptions.getItems().setAll(SearchOptions.values());
+        cbSearchOptions.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                filterThem(cbSearchOptions.getValue());
+                System.out.println(cbSearchOptions.getValue());
+            }
+        });
+//        filterThem(cbSearchOptions.getValue());
+//        System.out.println(cbSearchOptions.getValue());
+
+//        tfSearch.textProperty().addListener((observable, oldValue, newValue)->{
+//            filteredList.setPredicate(card -> {
+//                if(newValue == null || newValue.isEmpty()){
+//                    return true;
+//                }
+//                String stringFilter = newValue.toLowerCase();
+//                //if contains return true - matches, else return false - doesn't match
+//                return card.getCardName().toLowerCase().contains(stringFilter);
+//            });
+//        });
+//
+//        SortedList<Card> sortedList = new SortedList<>(filteredList);
+//        sortedList.comparatorProperty().bind(tvCardList.comparatorProperty());
+//        tvCardList.setItems(sortedList);
 
 
     }

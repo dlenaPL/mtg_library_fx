@@ -5,3 +5,11 @@
 .table-row-cell:empty .table-cell {
     -fx-border-width: 0px;
 }
+
+.table-row-cell {
+  -fx-padding: 0 0 0 0;
+}
+
+.table-view .column-header {
+   -fx-padding: 0 0 0 3px;
+}
