@@ -22,4 +22,12 @@
   "cardType" : "Land",
   "expansionSet" : "The Lost Caverns of Ixalan",
   "rarity" : "COMMON"
+}, {
+  "@type" : "Spell",
+  "cardName" : "Dead Weight",
+  "cardType" : "Enchantment — Aura",
+  "expansionSet" : " The Lost Caverns of Ixalan",
+  "rarity" : "COMMON",
+  "manaCost" : "Black",
+  "cardText" : "Enchant creature. Enchanted creature gets -2/-2."
 } ]

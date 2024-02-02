@@ -1,9 +1,6 @@
 package com.dl.demo;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,17 +14,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-
 import java.io.File;
 import java.io.IOException;
 
 public class CardLibraryController {
-
-
-    public TableView<Card> getTvCardList() {
-        return tvCardList;
-    }
 
     @FXML
     private TableView<Card> tvCardList = new TableView<>();
@@ -40,11 +30,15 @@ public class CardLibraryController {
     @FXML
     private TableColumn<Card, Rarity> colCardRarity = new TableColumn<>();
     @FXML
+    private TableColumn<Card, String> colRules = new TableColumn<>();
+    @FXML
     private Button btnAddCard = new Button("Add");
     @FXML
     private Button btnDeleteCard = new Button("Delete");
     @FXML
     private Button btnEditCard = new Button("Edit");
+    @FXML
+    private Button btnSave = new Button("Save");
     @FXML
     private Button btnImport = new Button("Import");
     @FXML
@@ -57,7 +51,9 @@ public class CardLibraryController {
     public void populateLibrary(){
         System.out.println("fired populate");
         colCardName.setCellValueFactory(new PropertyValueFactory<Card, String>("cardName"));
+        colCardName.setSortable(true);
         colCardType.setCellValueFactory(new PropertyValueFactory<Card, String>("cardType"));
+        colCardType.setSortable(false);
         colCardManaCost.setCellValueFactory(cellData->{
             Card card = cellData.getValue();
             //check the lower child in hierarchy first
@@ -66,8 +62,22 @@ public class CardLibraryController {
             else
                 return new SimpleStringProperty();
         });
+        colCardManaCost.setSortable(false);
         colCardRarity.setCellValueFactory(new PropertyValueFactory<Card, Rarity>("rarity"));
+        colCardRarity.setSortable(false);
+        colRules.setCellValueFactory(cellData->{
+            Card card = cellData.getValue();
+            //check the lower child in hierarchy first
+            if(cellData.getValue() instanceof Spell)
+                return new SimpleStringProperty(((Spell)card).getCardText());
+            else
+                return new SimpleStringProperty();
+        });
+        colRules.setSortable(false);
+
         tvCardList.setItems(cardLibraryEnum.getTvObservableList());
+        tvCardList.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
     }
 
     @FXML
@@ -209,6 +219,15 @@ public class CardLibraryController {
                 }
             }
 
+        });
+
+        btnSave.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.out.println("Saved");
+                cardLibraryEnum.saveToJson();
+                System.out.println(cardLibraryEnum.size());
+            }
         });
 
 

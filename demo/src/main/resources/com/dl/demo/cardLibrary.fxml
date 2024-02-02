@@ -15,9 +15,10 @@
       <TableView fx:id="tvCardList" layoutX="200.0" layoutY="100.0" prefHeight="450.0" prefWidth="780.0">
         <columns>
             <TableColumn fx:id="colCardName" prefWidth="207.0" text="Name" />
-            <TableColumn fx:id="colCardType" minWidth="0.0" prefWidth="122.0" text="Type" />
-            <TableColumn fx:id="colCardManaCost" prefWidth="112.0" text="Mana Cost" />
-            <TableColumn fx:id="colCardRarity" prefWidth="142.0" text="Rarity" />
+            <TableColumn fx:id="colCardType" minWidth="0.0" prefWidth="79.0" text="Type" />
+            <TableColumn fx:id="colCardManaCost" prefWidth="105.0" text="Mana Cost" />
+            <TableColumn fx:id="colCardRarity" prefWidth="107.0" text="Rarity" />
+            <TableColumn fx:id="colRules" prefWidth="281.0" text="Rules" />
         </columns>
       </TableView>
       <Pane prefHeight="100.0" prefWidth="1000.0" style="-fx-background-color: #2d3e54;" AnchorPane.leftAnchor="0.0">
@@ -35,6 +36,7 @@
             <Button fx:id="btnAddCard" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Add" />
             <Button fx:id="btnDeleteCard" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Delete" />
             <Button fx:id="btnEditCard" layoutX="60.0" layoutY="100.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Edit" />
+            <Button fx:id="btnSave" layoutX="60.0" layoutY="160.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Save" />
             <Button fx:id="btnImport" layoutX="60.0" layoutY="160.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Import" />
             <Button fx:id="btnExport" layoutX="60.0" layoutY="220.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Export" />
          </children>
