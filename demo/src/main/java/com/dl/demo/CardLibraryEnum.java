@@ -46,16 +46,30 @@ public enum CardLibraryEnum implements CardCollectionControl {
     public void showFullView(){
         System.out.println(this.library);
     }
+
+    private String defaultPath = "src/main/java/Json/card_library.json";
+
+    private String importedPath = "";
+
+    public void setImportedPath(String importedPath) {
+        this.importedPath = importedPath;
+    }
+
     public void saveToJson(){
 
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         try {
             // due to type erasure I need to transform arraylist to array of object not to lose JsonSubTypes property from Json String
             Card[] tempLib = this.library.toArray(new Card[0]);
-
-            mapper.writerWithDefaultPrettyPrinter().writeValue(new File("src/main/java/Json/card_library.json"), tempLib);
-            System.out.println("Saved to JSON");
-
+            //made this change for the jar file to be able to save changes done in library
+            //to the same file from which data was imported, because there is no possibility to write changes into .jar
+            if (Objects.equals(importedPath, "")){
+                mapper.writerWithDefaultPrettyPrinter().writeValue(new File(defaultPath), tempLib);
+                System.out.println("Saved to JSON default path");
+            }else {
+                mapper.writerWithDefaultPrettyPrinter().writeValue(new File(importedPath), tempLib);
+                System.out.println("Saved to JSON new path");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -79,7 +93,7 @@ public enum CardLibraryEnum implements CardCollectionControl {
     public void loadFromJason(){
         ObjectMapper mapper = new ObjectMapper();
         try {
-            this.library = mapper.readValue(new File("src/main/java/Json/card_library.json"), mapper.getTypeFactory().constructCollectionType(ArrayList.class, Card.class));
+            this.library = mapper.readValue(new File(defaultPath), mapper.getTypeFactory().constructCollectionType(ArrayList.class, Card.class));
             System.out.println("Loaded from JSON");
             this.tvObservableList.setAll(this.library);
         } catch (IOException e) {

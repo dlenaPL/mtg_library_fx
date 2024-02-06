@@ -166,4 +166,16 @@
   "cardText" : "Reach, trample",
   "power" : 4,
   "toughness" : 5
+}, {
+  "@type" : "Land",
+  "cardName" : "Mountain",
+  "cardType" : "Land",
+  "expansionSet" : "The Lost Caverns of Ixalan",
+  "rarity" : "COMMON"
+}, {
+  "@type" : "Land",
+  "cardName" : "Forrest",
+  "cardType" : "Land",
+  "expansionSet" : "The Lost Caverns of Ixalan",
+  "rarity" : "COMMON"
 } ]

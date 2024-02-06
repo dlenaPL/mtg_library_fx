@@ -18,6 +18,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class CardLibraryController {
 
@@ -94,7 +95,7 @@ public class CardLibraryController {
                         return true;
                     }
                     String stringFilter = newValue.toLowerCase();
-
+                    //if contains return true - matches, return false - doesn't match
                     switch (option) {
                         case NAME:
                             return card.getCardName().toLowerCase().contains(stringFilter);
@@ -106,8 +107,6 @@ public class CardLibraryController {
                             if (card instanceof Spell)
                                 return ((Spell) card).getManaCost().toLowerCase().contains(stringFilter);
                     };
-                    //if contains return true - matches, else return false - doesn't match
-//                  return card.getCardName().toLowerCase().contains(stringFilter);
                     return false;
                 });
             });
@@ -196,7 +195,8 @@ public class CardLibraryController {
                 FileChooser.ExtensionFilter ex2 = new FileChooser.ExtensionFilter("All Files", "*.*");
 
                 fileChooser.getExtensionFilters().addAll(ex1, ex2);
-                fileChooser.setInitialDirectory(new File("C:/Users/48721/OneDrive/Pulpit"));
+
+                fileChooser.setInitialDirectory(new File("c:"));
 
                 Node node = (Node)actionEvent.getSource();
                 Stage stage = (Stage)node.getScene().getWindow();
@@ -206,6 +206,7 @@ public class CardLibraryController {
                     System.out.println("Opened file");
                     String path = selectedFile.getPath();
                     System.out.println(path);
+                    CardLibraryEnum.INSTANCE.setImportedPath(path);
                     cardLibraryEnum.loadFromJason(path);
                 }
             }
@@ -219,8 +220,7 @@ public class CardLibraryController {
                 FileChooser.ExtensionFilter ex1 = new FileChooser.ExtensionFilter("JSON Files", "*.json");
                 FileChooser.ExtensionFilter ex2 = new FileChooser.ExtensionFilter("All Files", "*.*");
                 fileChooser.getExtensionFilters().addAll(ex1, ex2);
-
-                fileChooser.setInitialDirectory(new File("C:/Users/48721/OneDrive/Pulpit"));
+                fileChooser.setInitialDirectory(new File("c:"));
 
                 Node node = (Node)actionEvent.getSource();
                 Stage stage = (Stage)node.getScene().getWindow();
@@ -267,6 +267,8 @@ public class CardLibraryController {
                 System.out.println("Saved");
                 cardLibraryEnum.saveToJson();
                 System.out.println(cardLibraryEnum.size());
+                PopUp.display("", "Saved successfully");
+
             }
         });
 

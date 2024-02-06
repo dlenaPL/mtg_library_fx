@@ -6,10 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -75,6 +72,18 @@ public class AddCardSceneController {
         hbType.setVisible(true);
         hbExpansion.setVisible(true);
         hbRarity.setVisible(true);
+    }
+
+    private boolean isInt(String str) {
+        if (str == null) {
+            return false;
+        }
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
     }
     private CardTypes cardType;
     EventHandler<ActionEvent> cardTypeEvent = new EventHandler<>() {
@@ -157,12 +166,19 @@ public class AddCardSceneController {
             @Override
             public void handle(ActionEvent actionEvent) {
                 System.out.println("inside add button");
-                addCardToLib(actionEvent);
-                clear(actionEvent);
-                Node node = (Node)actionEvent.getSource();
-                Stage stage = (Stage)node.getScene().getWindow();
-                stage.close();
-
+                if(tfName.getText().isBlank()) {
+                    PopUp.display("Missing value", "Card needs to at least have a name.");
+                } else if(cbCardType.getValue() == CardTypes.CREATURE && !isInt(tfPower.getText())){
+                    PopUp.display("Not a natural number", "Power must be a natural number.");
+                } else if (cbCardType.getValue() == CardTypes.CREATURE && !isInt(tfToughness.getText())) {
+                        PopUp.display("Not a natural number", "Toughness must be a natural number.");
+                } else {
+                    addCardToLib(actionEvent);
+                    clear(actionEvent);
+                    Node node = (Node)actionEvent.getSource();
+                    Stage stage = (Stage)node.getScene().getWindow();
+                    stage.close();
+                }
             }
         });
 
