@@ -8,9 +8,6 @@ public interface CardCollectionControl {
     void remove(String elmName);
     void clear();
 
-    //TODO
-    //public void editElement()
-
     void show();
     void showFullView();
 

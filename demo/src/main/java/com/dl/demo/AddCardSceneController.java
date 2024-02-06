@@ -6,10 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -18,8 +15,6 @@ public class AddCardSceneController {
 
     CardLibraryEnum cardLibraryEnum = CardLibraryEnum.INSTANCE;
 
-    @FXML
-    private VBox vbAddCardScene = new VBox();
     @FXML
     private HBox hbName = new HBox();
     @FXML
@@ -53,31 +48,89 @@ public class AddCardSceneController {
     @FXML
     private TextField tfToughness = new TextField();
     @FXML
-    private HBox hbActionButtons = new HBox();
-    @FXML
     private Button btnAdd = new Button();
+    @FXML
+    private ComboBox<CardTypes> cbCardType = new ComboBox<>();
 
+
+    private void hideFields(){
+        hbName.setVisible(false);
+        hbType.setVisible(false);
+        hbExpansion.setVisible(false);
+        hbRarity.setVisible(false);
+        hbManaCost.setVisible(false);
+        hbRules.setVisible(false);
+        hbPower.setVisible(false);
+        hbToughness.setVisible(false);
+    }
+    private void showBasicFields(){
+        hbName.setVisible(true);
+        hbType.setVisible(true);
+        hbExpansion.setVisible(true);
+        hbRarity.setVisible(true);
+    }
+
+    private boolean isInt(String str) {
+        if (str == null) {
+            return false;
+        }
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+    }
+    private CardTypes cardType;
+    EventHandler<ActionEvent> cardTypeEvent = new EventHandler<>() {
+        public void handle(ActionEvent e) {
+            switch(cbCardType.getValue()) {
+                case LAND:
+                    showBasicFields();
+                    hbManaCost.setVisible(false);
+                    hbRules.setVisible(false);
+                    hbPower.setVisible(false);
+                    hbToughness.setVisible(false);
+                    cardType = CardTypes.LAND;
+                    break;
+                case SPELL:
+                    showBasicFields();
+                    hbManaCost.setVisible(true);
+                    hbRules.setVisible(true);
+                    hbPower.setVisible(false);
+                    hbToughness.setVisible(false);
+                    cardType = CardTypes.SPELL;
+                    break;
+                case CREATURE:
+                    showBasicFields();
+                    hbManaCost.setVisible(true);
+                    hbRules.setVisible(true);
+                    hbPower.setVisible(true);
+                    hbToughness.setVisible(true);
+                    cardType = CardTypes.CREATURE;
+                    break;
+            }
+        }
+    };
     @FXML
     private void addCardToLib(ActionEvent event){
-        String name = tfName.getText();
-        String type = tfType.getText();
-        String expansion = tfExpansion.getText();
-        Rarity rarity = cbRarity.getValue();
-        String manaCost = tfName.getText();
-        String rules = tfName.getText();
-        int power = Integer.parseInt(tfPower.getText());
-        int toughness = Integer.parseInt(tfToughness.getText());
-
-        Creature temp = new Creature(name, type, expansion, rarity, manaCost, rules, power, toughness);
-
-        cardLibraryEnum.add(temp);
+        switch (cardType){
+            case LAND:
+                Land tempLand = new Land(tfName.getText(), tfType.getText(), tfExpansion.getText(), cbRarity.getValue());
+                cardLibraryEnum.add(tempLand);
+                break;
+            case SPELL:
+                Spell tempSpell = new Spell(tfName.getText(), tfType.getText(), tfExpansion.getText(), cbRarity.getValue(), tfManaCost.getText(), tfRules.getText());
+                cardLibraryEnum.add(tempSpell);
+                break;
+            case CREATURE:
+                Creature tempCreature = new Creature(tfName.getText(), tfType.getText(), tfExpansion.getText(), cbRarity.getValue(), tfManaCost.getText(), tfRules.getText(), Integer.parseInt(tfPower.getText()), Integer.parseInt(tfToughness.getText()));
+                cardLibraryEnum.add(tempCreature);
+                break;
+        }
         cardLibraryEnum.getTvObservableList().setAll(cardLibraryEnum.getLibrary());
         System.out.println("list size: " + cardLibraryEnum.size());
-        //cardLibraryEnum.add(temp);
-
-
         System.out.println("card created");
-
     }
 
     @FXML
@@ -98,20 +151,30 @@ public class AddCardSceneController {
     @FXML
     public void initialize(){
 
+        cbCardType.getItems().setAll(CardTypes.values());
+        cbCardType.setPromptText("Choose card type");
+        cbCardType.setOnAction(cardTypeEvent);
+        hideFields();
+
         cbRarity.getItems().setAll(Rarity.values());
         cbRarity.setPromptText("Choose rarity");
         btnAdd.setOnAction(new EventHandler<>(){
             @Override
             public void handle(ActionEvent actionEvent) {
                 System.out.println("inside add button");
-                addCardToLib(actionEvent);
-                clear(actionEvent);
-
-
-                Node node = (Node)actionEvent.getSource();
-                Stage stage = (Stage)node.getScene().getWindow();
-                stage.close();
-
+                if(tfName.getText().isBlank()) {
+                    PopUp.display("Missing value", "Card needs to at least have a name.");
+                } else if(cbCardType.getValue() == CardTypes.CREATURE && !isInt(tfPower.getText())){
+                    PopUp.display("Not a natural number", "Power must be a natural number.");
+                } else if (cbCardType.getValue() == CardTypes.CREATURE && !isInt(tfToughness.getText())) {
+                        PopUp.display("Not a natural number", "Toughness must be a natural number.");
+                } else {
+                    addCardToLib(actionEvent);
+                    clear(actionEvent);
+                    Node node = (Node)actionEvent.getSource();
+                    Stage stage = (Stage)node.getScene().getWindow();
+                    stage.close();
+                }
             }
         });
 
