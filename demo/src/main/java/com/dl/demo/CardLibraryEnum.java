@@ -47,7 +47,7 @@ public enum CardLibraryEnum implements CardCollectionControl {
         System.out.println(this.library);
     }
 
-    private String defaultPath = "src/main/java/Json/card_library.json";
+    private final String defaultPath = "src/main/java/Json/card_library.json";
 
     private String importedPath = "";
 

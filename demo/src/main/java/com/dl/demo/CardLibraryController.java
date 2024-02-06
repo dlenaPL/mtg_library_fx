@@ -54,7 +54,6 @@ public class CardLibraryController {
     private final CardLibraryEnum cardLibraryEnum = CardLibraryEnum.INSTANCE;
     private FilteredList<Card> filteredList = new FilteredList<>(cardLibraryEnum.getTvObservableList(), b->true);
 
-
     public void populateLibrary(){
         System.out.println("fired populate");
         colCardName.setCellValueFactory(new PropertyValueFactory<Card, String>("cardName"));
@@ -84,7 +83,6 @@ public class CardLibraryController {
 
         tvCardList.setItems(cardLibraryEnum.getTvObservableList());
         tvCardList.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
     }
 
     private void filterThem(SearchOptions option){
@@ -116,7 +114,6 @@ public class CardLibraryController {
 
             tvCardList.setItems(sortedList);
         }
-
     }
 
     @FXML
@@ -182,8 +179,6 @@ public class CardLibraryController {
                 System.out.println(cardLibraryEnum.size());
             }
         });
-
-
 
         btnImport.setOnAction(new EventHandler<>() {
             @Override
@@ -280,25 +275,6 @@ public class CardLibraryController {
                 System.out.println(cbSearchOptions.getValue());
             }
         });
-//        filterThem(cbSearchOptions.getValue());
-//        System.out.println(cbSearchOptions.getValue());
-
-//        tfSearch.textProperty().addListener((observable, oldValue, newValue)->{
-//            filteredList.setPredicate(card -> {
-//                if(newValue == null || newValue.isEmpty()){
-//                    return true;
-//                }
-//                String stringFilter = newValue.toLowerCase();
-//                //if contains return true - matches, else return false - doesn't match
-//                return card.getCardName().toLowerCase().contains(stringFilter);
-//            });
-//        });
-//
-//        SortedList<Card> sortedList = new SortedList<>(filteredList);
-//        sortedList.comparatorProperty().bind(tvCardList.comparatorProperty());
-//        tvCardList.setItems(sortedList);
-
-
     }
 
 }

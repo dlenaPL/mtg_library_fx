@@ -19,63 +19,45 @@ public class EditCardController {
 
     @FXML
     private Button btnCancel;
-
     @FXML
     private Button btnSave;
-
     @FXML
     private HBox hbActionButtons;
-
     @FXML
     private HBox hbExpansion;
-
     @FXML
     private HBox hbManaCost;
-
     @FXML
     private HBox hbName;
-
     @FXML
     private HBox hbPower;
-
     @FXML
     private HBox hbRarity;
-
     @FXML
     private HBox hbRules;
-
     @FXML
     private HBox hbToughness;
-
     @FXML
     private HBox hbType;
-
     @FXML
     private TextField tfExpansion;
-
     @FXML
     private TextField tfManaCost;
-
     @FXML
     private TextField tfName;
-
     @FXML
     private TextField tfPower;
-
     @FXML
     private TextField tfRules;
-
     @FXML
     private TextField tfToughness;
-
     @FXML
     private TextField tfType;
-
     @FXML
     private VBox vbEditCard;
-
     @FXML
     private ComboBox<Rarity> cbRarity;
+
     private void hideFields(){
         hbName.setVisible(false);
         hbType.setVisible(false);
@@ -96,10 +78,8 @@ public class EditCardController {
         CardLibraryEnum.INSTANCE.getTvObservableList().clear();
         CardLibraryEnum.INSTANCE.getTvObservableList().setAll(CardLibraryEnum.INSTANCE.getLibrary());
     }
-
     private String type;
     private Card cardToEdit;
-
     public void initData(Card selectedCard) {
         cardToEdit = selectedCard;
         cbRarity.getItems().setAll(Rarity.values());
@@ -166,14 +146,9 @@ public class EditCardController {
                         break;
                 }
                 refreshTable();
-
                 Stage stage = (Stage) btnSave.getScene().getWindow();
                 stage.close();
-
-
             }
-
-
         });
 
         btnCancel.setOnAction(new EventHandler<>(){
@@ -184,9 +159,5 @@ public class EditCardController {
                 stage.close();
             }
         });
-
-
     }
-
-
 }

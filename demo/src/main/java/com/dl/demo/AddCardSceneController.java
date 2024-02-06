@@ -16,8 +16,6 @@ public class AddCardSceneController {
     CardLibraryEnum cardLibraryEnum = CardLibraryEnum.INSTANCE;
 
     @FXML
-    private VBox vbAddCardScene = new VBox();
-    @FXML
     private HBox hbName = new HBox();
     @FXML
     private TextField tfName = new TextField();
@@ -49,8 +47,6 @@ public class AddCardSceneController {
     private HBox hbToughness = new HBox();
     @FXML
     private TextField tfToughness = new TextField();
-    @FXML
-    private HBox hbActionButtons = new HBox();
     @FXML
     private Button btnAdd = new Button();
     @FXML

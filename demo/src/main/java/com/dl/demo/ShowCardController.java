@@ -60,7 +60,6 @@ public class ShowCardController {
         hbRarity.setVisible(true);
     }
 
-
     public void initData(Card selectedCard){
         hideFields();
         showBasicFields();
@@ -68,7 +67,6 @@ public class ShowCardController {
         labelType.setText(selectedCard.getCardType());
         labelExpansion.setText(selectedCard.getExpansionSet());
         labelRarity.setText(selectedCard.getRarity().getValue());
-
 
         if(selectedCard instanceof Creature){
             System.out.println("creat");
@@ -82,7 +80,6 @@ public class ShowCardController {
             hbPower.setVisible(true);
             hbToughness.setVisible(true);
 
-
         }else if(selectedCard instanceof Spell){
             System.out.println("spell");
             labelManaCost.setText(((Spell) selectedCard).getManaCost());
@@ -95,7 +92,4 @@ public class ShowCardController {
             System.out.println("land");
         }
     }
-
-
-
 }
