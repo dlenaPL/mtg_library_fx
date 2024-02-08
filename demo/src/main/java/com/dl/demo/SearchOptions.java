@@ -4,5 +4,5 @@ public enum SearchOptions {
     NAME,
     TYPE,
     MANA_COST,
-    RARITY;
+    RARITY
 }

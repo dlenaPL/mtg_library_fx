@@ -1,12 +1,8 @@
 package com.dl.demo;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
 public class ShowCardController {
 
@@ -69,7 +65,7 @@ public class ShowCardController {
         labelRarity.setText(selectedCard.getRarity().getValue());
 
         if(selectedCard instanceof Creature){
-            System.out.println("creat");
+            System.out.println("creature");
             labelManaCost.setText(((Spell) selectedCard).getManaCost());
             labelRules.setText(((Spell) selectedCard).getCardText());
             labelPower.setText(Integer.toString(((Creature) selectedCard).getPower()));
