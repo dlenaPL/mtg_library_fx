@@ -6,7 +6,6 @@ public enum Rarity {
     RARE("Rare"),
     MYTHIC_RARE("Mythic rare"),
     DEFAULT("Default");
-
     private final String value;
     Rarity(String rarity) {
         this.value = rarity;

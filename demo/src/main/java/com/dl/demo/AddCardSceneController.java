@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 public class AddCardSceneController {
 
-    CardLibraryEnum cardLibraryEnum = CardLibraryEnum.INSTANCE;
+    private CardLibraryEnum cardLibraryEnum = CardLibraryEnum.INSTANCE;
 
     @FXML
     private HBox hbName = new HBox();
@@ -82,7 +82,7 @@ public class AddCardSceneController {
         }
     }
     private CardTypes cardType;
-    EventHandler<ActionEvent> cardTypeEvent = new EventHandler<>() {
+    private EventHandler<ActionEvent> cardTypeEvent = new EventHandler<>() {
         public void handle(ActionEvent e) {
             switch(cbCardType.getValue()) {
                 case LAND:
